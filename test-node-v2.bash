@@ -51,7 +51,7 @@ docker-compose -f $composeFile run testnode-scripts redis-init
 echo "====== Start sequencer ======"
 docker-compose -f $composeFile up -d sequencer
 
-echo "====== Funding L2 funnel to inbox address ======"
+echo "====== Bride fund from L1 funnel to L2 (deposit to inbox address) ======"
 docker-compose -f $composeFile run testnode-scripts bridge-funds --from funnel --ethamount 100000 --wait
 
 echo "====== Start all sequencer poster validator ======"
