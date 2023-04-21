@@ -26,6 +26,6 @@ contracts/test/storage/*-old.dot
 /reproducible-wasm/*.wasm
 target/
 yarn-error.log
-local/
+/local/
 testdata
 system_tests/test-data/*
