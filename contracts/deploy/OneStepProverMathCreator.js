@@ -6,6 +6,7 @@ module.exports = async hre => {
   await deploy('OneStepProverMath', {
     from: deployer,
     args: [],
+    log: true,
   })
 }
 

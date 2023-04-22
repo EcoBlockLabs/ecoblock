@@ -6,6 +6,7 @@ module.exports = async hre => {
   await deploy('OneStepProverMemory', {
     from: deployer,
     args: [],
+    log: true,
   })
 }
 

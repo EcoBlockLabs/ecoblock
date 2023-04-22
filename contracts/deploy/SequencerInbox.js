@@ -3,7 +3,7 @@ module.exports = async hre => {
   const { deploy } = deployments
   const { deployer } = await getNamedAccounts()
 
-  await deploy('SequencerInbox', { from: deployer, args: [] })
+  await deploy('SequencerInbox', { from: deployer, args: [], log: true })
 }
 
 module.exports.tags = ['SequencerInbox']

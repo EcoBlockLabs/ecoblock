@@ -6,6 +6,7 @@ module.exports = async hre => {
   await deploy('ValueArrayTester', {
     from: deployer,
     args: [],
+    log: true,
   })
 }
 

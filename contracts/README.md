@@ -13,3 +13,19 @@ cd nitro/contracts
 yarn install
 yarn build
 ```
+
+# How to deploy?
+
+Example scripts
+
+```shell
+yarn hardhat deploy --tags SequencerInbox --network geth
+```
+
+# How to verify smart contract?
+
+Example scripts
+
+```shell
+yarn run hardhat verify --network geth --contract src/bridge/SequencerInbox.sol:SequencerInbox <CONTRACT_ADDRESS>
+```

@@ -6,6 +6,7 @@ module.exports = async hre => {
   await deploy('HashProofHelper', {
     from: deployer,
     args: [],
+    log: true,
   })
 }
 

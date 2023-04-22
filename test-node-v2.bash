@@ -58,4 +58,4 @@ echo "====== Start all sequencer poster validator ======"
 docker-compose -f $composeFile up -d sequencer poster validator
 
 echo "====== Start L1 & L2 block explorers ======"
-docker-compose -f $composeFile up -d blockscout_l1 blockscout_l2
+docker-compose -f $composeFile up -d blockscout-l1 blockscout-l2

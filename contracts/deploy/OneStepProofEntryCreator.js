@@ -11,6 +11,7 @@ module.exports = async hre => {
       (await deployments.get('OneStepProverMath')).address,
       (await deployments.get('OneStepProverHostIo')).address,
     ],
+    log: true,
   })
 }
 

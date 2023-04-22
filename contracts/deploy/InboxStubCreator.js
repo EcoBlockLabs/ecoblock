@@ -6,6 +6,7 @@ module.exports = async hre => {
   const inboxDeployResult = await deploy('InboxStub', {
     from: deployer,
     args: [],
+    log: true,
   })
 
   const bridge = await ethers.getContract('BridgeStub')

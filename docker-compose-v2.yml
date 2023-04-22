@@ -125,10 +125,11 @@ services:
     ports:
       - "127.0.0.1:7432:5432"
 
-  blockscout_l1:
+  blockscout-l1:
     depends_on:
       - postgres
       - geth
+      - blockscout-l1-verifier
     image: blockscout/blockscout:4.1.7
     container_name: nitro-v2-blockscout-l1
     restart: always
@@ -144,10 +145,21 @@ services:
       ETHEREUM_JSONRPC_HTTP_URL: http://geth:8545/
       DATABASE_URL: postgresql://postgres:@postgres:5432/blockscout_l1
       ECTO_USE_SSL: 'false'
+      SECRET_KEY_BASE: "RMgI4C1HSkxsEjdhtGMfwAHfyT6CKWXOgzCboJflfSm4jeAlic52io05KB6mqzc5"
+      MICROSERVICE_SC_VERIFIER_URL: http://blockscout-l1-verifier:8150/
     ports:
       - "4001:4000"
 
-  blockscout_l2:
+  blockscout-l1-verifier:
+    image: ghcr.io/blockscout/smart-contract-verifier
+    restart: always
+    container_name: 'nitro-v2-blockscout-l1-verifier'
+    env_file:
+      - .deployment/local/blockscout-l1-verifier.env
+    ports:
+      - "8150:8050"
+
+  blockscout-l2:
     depends_on:
       - postgres
       - sequencer

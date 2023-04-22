@@ -6,6 +6,9 @@ import '@typechain/hardhat'
 import 'solidity-coverage'
 import 'hardhat-gas-reporter'
 import prodConfig from './hardhat.prod-config'
+import {config as dotEnvConfig} from 'dotenv';
+
+dotEnvConfig();
 
 const solidity = {
   compilers: [
@@ -129,6 +132,7 @@ module.exports = {
       arbitrumTestnet: process.env['ARBISCAN_API_KEY'],
       nova: process.env['NOVA_ARBISCAN_API_KEY'],
       arbGoerliRollup: process.env['ARBISCAN_API_KEY'],
+      geth: process.env['ETHERSCAN_API_KEY'],
     },
     customChains: [
       {
@@ -145,6 +149,14 @@ module.exports = {
         urls: {
           apiURL: 'https://api-goerli.arbiscan.io/api',
           browserURL: 'https://goerli.arbiscan.io/',
+        },
+      },
+      {
+        network: 'geth',
+        chainId: 1337,
+        urls: {
+          apiURL: 'http://localhost:4001/api',// blockscout api
+          browserURL: 'http://localhost:4001/',
         },
       },
     ],
