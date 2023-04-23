@@ -8,6 +8,9 @@ echo "====== Setup writable volumes ======"
 # Don't let docker create these directories automatically,
 # it will be not writeable by current user.
 mkdir -p ./.deployment/local/volumes/config
+mkdir -p ./.deployment/local/volumes/l1data
+mkdir -p ./.deployment/local/volumes/l1keystore
+mkdir -p ./.deployment/local/volumes/postgres-data
 mkdir -p ./.deployment/local/volumes/seq-data
 mkdir -p ./.deployment/local/volumes/poster-data
 mkdir -p ./.deployment/local/volumes/validator-data
