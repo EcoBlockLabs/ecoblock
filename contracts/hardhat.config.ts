@@ -120,7 +120,7 @@ module.exports = {
         : [],
     },
     geth: {
-      url: 'http://localhost:8545',
+      url: process.env['GETH_URL'] ? process.env['GETH_URL'] : 'http://localhost:8545',
     },
   },
   etherscan: {
@@ -155,8 +155,8 @@ module.exports = {
         network: 'geth',
         chainId: 1337,
         urls: {
-          apiURL: 'http://localhost:4001/api',// blockscout api
-          browserURL: 'http://localhost:4001/',
+          apiURL: process.env['GETH_EXPLORER_API'] ? process.env['GETH_EXPLORER_API'] : 'http://localhost:4001/api',
+          browserURL: process.env['GETH_EXPLORER_URL'] ? process.env['GETH_EXPLORER_URL'] : 'http://localhost:4001/',
         },
       },
     ],
