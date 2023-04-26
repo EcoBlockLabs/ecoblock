@@ -39,3 +39,4 @@ arbitrator/prover/test-cases
 
 # external tools and IDEs
 .vscode
+.deployment/local/volumes
