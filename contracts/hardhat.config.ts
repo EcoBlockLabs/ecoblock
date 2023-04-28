@@ -136,6 +136,22 @@ module.exports = {
     },
     customChains: [
       {
+        network: 'ecoblock',
+        chainId: 620,
+        urls: {
+          apiURL: 'https://ecoscan.io/api',
+          browserURL: 'https://ecoscan.io/',
+        },
+      },
+      {
+        network: 'ecoblockTestnet',
+        chainId: 621,
+        urls: {
+          apiURL: 'https://testnet.ecoscan.io/api',
+          browserURL: 'https://testnet.ecoscan.io/',
+        },
+      },
+      {
         network: 'nova',
         chainId: 42170,
         urls: {

@@ -732,6 +732,11 @@ func ParseNode(ctx context.Context, args []string) (*NodeConfig, *genericconf.Wa
 		switch l2ChainId {
 		case 0:
 			return nil, nil, nil, nil, nil, errors.New("must specify --l2.chain-id to choose rollup")
+		case 620:
+			if err := applyEcoBlockMainnetParameters(k); err != nil {
+				return nil, nil, nil, nil, nil, err
+			}
+			chainFound = true
 		case 42161:
 			if err := applyArbitrumOneParameters(k); err != nil {
 				return nil, nil, nil, nil, nil, err
@@ -764,6 +769,16 @@ func ParseNode(ctx context.Context, args []string) (*NodeConfig, *genericconf.Wa
 			chainFound = true
 		case 421703:
 			if err := applyArbitrumAnytrustGoerliTestnetParameters(k); err != nil {
+				return nil, nil, nil, nil, nil, err
+			}
+			chainFound = true
+		}
+	} else if l1ChainId.Uint64() == 11155111 { // Sepolia testnet
+		switch l2ChainId {
+		case 0:
+			return nil, nil, nil, nil, nil, errors.New("must specify --l2.chain-id to choose rollup")
+		case 621:
+			if err := applyEcoBlockSepoliaTestnetParameters(k); err != nil {
 				return nil, nil, nil, nil, nil, err
 			}
 			chainFound = true
@@ -817,6 +832,41 @@ func ParseNode(ctx context.Context, args []string) (*NodeConfig, *genericconf.Wa
 		return nil, nil, nil, nil, nil, err
 	}
 	return &nodeConfig, &l1Wallet, &l2DevWallet, l1Client, l1ChainId, nil
+}
+
+func applyEcoBlockMainnetParameters(k *koanf.Koanf) error {
+	// TODO update EcoBlock mainnet config
+	return k.Load(confmap.Provider(map[string]interface{}{
+		"persistent.chain":                   "arb1",
+		"node.forwarding-target":             "https://rpc1.ecoblock.tech",
+		"node.feed.input.url":                "wss://feed.ecoblock.tech",
+		"l1.rollup.bridge":                   "",
+		"l1.rollup.inbox":                    "",
+		"l1.rollup.rollup":                   "",
+		"l1.rollup.sequencer-inbox":          "",
+		"l1.rollup.validator-utils":          "",
+		"l1.rollup.validator-wallet-creator": "",
+		"l1.rollup.deployed-at":              15411056,
+		"l2.chain-id":                        620,
+	}, "."), nil)
+}
+
+func applyEcoBlockSepoliaTestnetParameters(k *koanf.Koanf) error {
+	// TODO update EcoBlock testnet config
+	return k.Load(confmap.Provider(map[string]interface{}{
+		"persistent.chain":                   "sepolia-rollup",
+		"node.forwarding-target":             "https://rpc1-testnet.ecoblock.tech",
+		"node.feed.input.url":                "wss://feed-testnet.ecoblock.tech",
+		"l1.rollup.bridge":                   "",
+		"l1.rollup.inbox":                    "",
+		"l1.rollup.rollup":                   "",
+		"l1.rollup.sequencer-inbox":          "",
+		"l1.rollup.validator-utils":          "",
+		"l1.rollup.validator-wallet-creator": "",
+		"l1.rollup.deployed-at":              7217526,
+		"l2.chain-id":                        621,
+		"init.empty":                         true,
+	}, "."), nil)
 }
 
 func applyArbitrumOneParameters(k *koanf.Koanf) error {
