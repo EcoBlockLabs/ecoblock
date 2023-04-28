@@ -1,4 +1,4 @@
-name: CI
+name: Arbitrator tests Skip CI
 
 on:
   pull_request:
