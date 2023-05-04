@@ -339,7 +339,11 @@ func mainImpl() int {
 			flag.Usage()
 			log.Crit("validator have the L1 reader enabled")
 		}
-		if !nodeConfig.Node.Staker.Dangerous.WithoutBlockValidator {
+		strategy, err := nodeConfig.Node.Staker.ParseStrategy()
+		if err != nil {
+			log.Crit("couldn't parse staker strategy", "err", err)
+		}
+		if strategy != staker.WatchtowerStrategy && !nodeConfig.Node.Staker.Dangerous.WithoutBlockValidator {
 			nodeConfig.Node.BlockValidator.Enable = true
 		}
 	}
@@ -540,6 +544,7 @@ type NodeConfig struct {
 	Metrics       bool                            `koanf:"metrics"`
 	MetricsServer genericconf.MetricsServerConfig `koanf:"metrics-server"`
 	Init          InitConfig                      `koanf:"init"`
+	Rpc           genericconf.RpcConfig           `koanf:"rpc"`
 }
 
 var NodeConfigDefault = NodeConfig{
@@ -575,6 +580,7 @@ func NodeConfigAddOptions(f *flag.FlagSet) {
 	f.Bool("metrics", NodeConfigDefault.Metrics, "enable metrics")
 	genericconf.MetricsServerAddOptions("metrics-server", f)
 	InitConfigAddOptions("init", f)
+	genericconf.RpcConfigAddOptions("rpc", f)
 }
 
 func (c *NodeConfig) ResolveDirectoryNames() error {
@@ -645,6 +651,10 @@ const maxRequestLogLength int = 2048
 
 func (l RpcResultLogger) OnResult(response interface{}, err error) {
 	if err != nil {
+		logger := log.Info
+		if err.Error() == "already known" {
+			logger = log.Trace
+		}
 		// The request might not've been logged if the log level is debug not trace, so we log it again here
 		request := fmt.Sprintf("%+v", l.request)
 		if len(request) > maxRequestLogLength {
@@ -652,7 +662,7 @@ func (l RpcResultLogger) OnResult(response interface{}, err error) {
 			postfix := request[len(request)-maxRequestLogLength/2:]
 			request = fmt.Sprintf("%v...%v", prefix, postfix)
 		}
-		log.Info("received error response from L1 RPC", "request", request, "response", response, "err", err)
+		logger("received error response from L1 RPC", "request", request, "response", response, "err", err)
 	} else {
 		// The request was already logged and can be cross-referenced by JSON-RPC id
 		log.Trace("received response from L1 RPC", "response", response)
@@ -816,6 +826,7 @@ func ParseNode(ctx context.Context, args []string) (*NodeConfig, *genericconf.Wa
 	if err != nil {
 		return nil, nil, nil, nil, nil, err
 	}
+	nodeConfig.Rpc.Apply()
 	return &nodeConfig, &l1Wallet, &l2DevWallet, l1Client, l1ChainId, nil
 }
 
