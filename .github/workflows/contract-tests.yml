@@ -11,7 +11,7 @@ on:
 jobs:
   tests:
     name: Contract tests
-    runs-on: ubuntu-8
+    runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
