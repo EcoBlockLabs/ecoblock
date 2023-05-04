@@ -11,7 +11,7 @@ on:
 jobs:
   tests:
     name: Contract tests
-    runs-on: ubuntu-latest
+    runs-on: self-hosted-ubuntu-23.04
     defaults:
       run:
         shell: bash

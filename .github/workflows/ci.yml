@@ -11,7 +11,7 @@ on:
 jobs:
   test:
     name: Go Tests
-    runs-on: ubuntu-latest
+    runs-on: self-hosted-ubuntu-23.04
 
     # Creates a redis container for redis tests
     services:

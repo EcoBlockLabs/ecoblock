@@ -11,7 +11,7 @@ on:
 jobs:
   docker:
     name: Docker build
-    runs-on: ubuntu-latest
+    runs-on: self-hosted-ubuntu-23.04
     services:
       # local registery
       registry:
@@ -20,13 +20,6 @@ jobs:
           - 5000:5000
 
     steps:
-      - name: Prepare disk space
-        run: |
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/ghc
-          sudo rm -rf "/usr/local/share/boost"
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-
       - name: Checkout
         uses: actions/checkout@v2
         with:
