@@ -22,8 +22,6 @@ jobs:
 
     strategy:
       fail-fast: false
-      matrix:
-        test-mode: [defaults, race, challenge]
 
     steps:
       - name: Checkout
@@ -79,7 +77,7 @@ jobs:
           path: |
             ~/go/pkg/mod
             ~/.cache/go-build
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}-${{ matrix.test-mode }}
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: ${{ runner.os }}-go-
 
       - name: Cache Rust Build Products
@@ -92,7 +90,7 @@ jobs:
             arbitrator/wasm-libraries/target/
             arbitrator/wasm-libraries/soft-float/SoftFloat/build
             target/etc/initial-machine-cache/
-          key: ${{ runner.os }}-cargo-${{ steps.install-rust.outputs.rustc_hash }}-min-${{ hashFiles('arbitrator/Cargo.lock') }}-${{ matrix.test-mode }}
+          key: ${{ runner.os }}-cargo-${{ steps.install-rust.outputs.rustc_hash }}-min-${{ hashFiles('arbitrator/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-cargo-${{ steps.install-rust.outputs.rustc_hash }}-
 
       - name: Cache cbrotli
@@ -105,7 +103,7 @@ jobs:
             target/lib/libbrotlicommon-static.a
             target/lib/libbrotlienc-static.a
             target/lib/libbrotlidec-static.a
-          key: ${{ runner.os }}-brotli-${{ hashFiles('build-brotli.sh') }}-${{ hashFiles('.github/workflows/arbitrator-ci.yaml') }}-${{ matrix.test-mode }}
+          key: ${{ runner.os }}-brotli-${{ hashFiles('build-brotli.sh') }}-${{ hashFiles('.github/workflows/arbitrator-ci.yaml') }}
           restore-keys: ${{ runner.os }}-brotli-
 
       - name: Build cbrotli-local
@@ -137,31 +135,26 @@ jobs:
           echo "GOGC=80" >> "$GITHUB_ENV"
 
       - name: run tests without race detection
-        if: matrix.test-mode == 'defaults'
         run: |
           packages=`go list ./...`
           gotestsum --format short-verbose --packages="$packages" --rerun-fails=1 -- -coverprofile=coverage.txt -covermode=atomic -coverpkg=./...,./go-ethereum/... -parallel=8
 
       - name: run tests with race detection
-        if: matrix.test-mode == 'race'
         run:  |
           packages=`go list ./...`
           gotestsum --format short-verbose --packages="$packages" --rerun-fails=1 -- -race -parallel=8
 
       - name: run redis tests
-        if: matrix.test-mode == 'defaults'
         run: TEST_REDIS=redis://localhost:6379/0 gotestsum --format short-verbose -- -p 1 -run TestRedis ./arbnode/... ./system_tests/... -coverprofile=coverage-redis.txt -covermode=atomic -coverpkg=./...
 
       - name: run challenge tests
-        if: matrix.test-mode == 'challenge'
-        run: gotestsum --format short-verbose -- ./... -coverprofile=coverage.txt -covermode=atomic -coverpkg=./...,./go-ethereum/... -parallel=8 -tags=challengetest -run=TestChallenge
+        run: gotestsum --format short-verbose -- ./... -coverprofile=coverage-challenge.txt -covermode=atomic -coverpkg=./...,./go-ethereum/... -parallel=8 -tags=challengetest -run=TestChallenge
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
-        if: matrix.test-mode == 'defaults'
         with:
           fail_ci_if_error: false
-          files: ./coverage.txt,./coverage-redis.txt
+          files: ./coverage.txt,./coverage-redis.txt,./coverage-challenge.txt
           verbose: false
           token: ${{ secrets.CODECOV_TOKEN }}
 
