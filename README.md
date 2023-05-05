@@ -1,42 +1,29 @@
-<br />
-<p align="center">
-  <a href="https://arbitrum.io/">
-    <img src="https://arbitrum.io/wp-content/uploads/2021/08/Arbitrum_Symbol-Full-color-White-background-768x840.png" alt="Logo" width="80" height="80">
-  </a>
+## About Ecoblock
 
-  <h3 align="center">Arbitrum Nitro</h3>
-
-  <p align="center">
-    <a href="https://developer.arbitrum.io/"><strong>Next Generation Ethereum L2 Technology »</strong></a>
-    <br />
-  </p>
-</p>
-
-## About Arbitrum Nitro
-
-<img src="https://arbitrum.io/wp-content/uploads/2021/08/Arbitrum_Symbol-Full-color-White-background-768x840.png" alt="Logo" width="80" height="80">
+[![run tests](https://github.com/EcoBlockLabs/ecoblock/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/EcoBlockLabs/ecoblock/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/EcoBlockLabs/ecoblock/branch/master/graph/badge.svg?token=Z75IAKFT08)](https://codecov.io/gh/EcoBlockLabs/ecoblock)
 
 Nitro is the latest iteration of the Arbitrum technology. It is a fully integrated, complete
-layer 2 optimistic rollup system, including fraud proofs, the sequencer, the token bridges, 
+layer 2 optimistic rollup system, including fraud proofs, the sequencer, the token bridges,
 advanced calldata compression, and more.
 
 See the live docs-site [here](https://developer.arbitrum.io/) (or [here](https://github.com/OffchainLabs/arbitrum-docs) for markdown docs source.)
 
 See [here](./audits) for security audit reports.
 
-The Nitro stack is built on several innovations. At its core is a new prover, which can do Arbitrum’s classic 
-interactive fraud proofs over WASM code. That means the L2 Arbitrum engine can be written and compiled using 
+The Nitro stack is built on several innovations. At its core is a new prover, which can do Arbitrum’s classic
+interactive fraud proofs over WASM code. That means the L2 Arbitrum engine can be written and compiled using
 standard languages and tools, replacing the custom-designed language and compiler used in previous Arbitrum
-versions. In normal execution, 
-validators and nodes run the Nitro engine compiled to native code, switching to WASM if a fraud proof is needed. 
-We compile the core of Geth, the EVM engine that practically defines the Ethereum standard, right into Arbitrum. 
+versions. In normal execution,
+validators and nodes run the Nitro engine compiled to native code, switching to WASM if a fraud proof is needed.
+We compile the core of Geth, the EVM engine that practically defines the Ethereum standard, right into Arbitrum.
 So the previous custom-built EVM emulator is replaced by Geth, the most popular and well-supported Ethereum client.
 
-The last piece of the stack is a slimmed-down version of our ArbOS component, rewritten in Go, which provides the 
-rest of what’s needed to run an L2 chain: things like cross-chain communication, and a new and improved batching 
+The last piece of the stack is a slimmed-down version of our ArbOS component, rewritten in Go, which provides the
+rest of what’s needed to run an L2 chain: things like cross-chain communication, and a new and improved batching
 and compression system to minimize L1 costs.
 
-Essentially, Nitro runs Geth at layer 2 on top of Ethereum, and can prove fraud over the core engine of Geth 
+Essentially, Nitro runs Geth at layer 2 on top of Ethereum, and can prove fraud over the core engine of Geth
 compiled to WASM.
 
 Arbitrum One successfully migrated from the Classic Arbitrum stack onto Nitro on 8/31/22. (See [state migration](https://developer.arbitrum.io/migration/state-migration) and [dapp migration](https://developer.arbitrum.io/migration/dapp_migration) for more info).
