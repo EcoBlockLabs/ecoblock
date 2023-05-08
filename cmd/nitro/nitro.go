@@ -863,18 +863,17 @@ func applyEcoBlockMainnetParameters(k *koanf.Koanf) error {
 }
 
 func applyEcoBlockSepoliaTestnetParameters(k *koanf.Koanf) error {
-	// TODO update EcoBlock testnet config
 	return k.Load(confmap.Provider(map[string]interface{}{
 		"persistent.chain":                   "sepolia-rollup",
 		"node.forwarding-target":             "https://rpc1-testnet.ecoblock.tech",
 		"node.feed.input.url":                "wss://feed-testnet.ecoblock.tech",
-		"l1.rollup.bridge":                   "",
-		"l1.rollup.inbox":                    "",
-		"l1.rollup.rollup":                   "",
-		"l1.rollup.sequencer-inbox":          "",
-		"l1.rollup.validator-utils":          "",
-		"l1.rollup.validator-wallet-creator": "",
-		"l1.rollup.deployed-at":              7217526,
+		"l1.rollup.bridge":                   "0x01af98e5962082813332ecce5b2df0c050d26416",
+		"l1.rollup.inbox":                    "0xa873a0c74573889e261fd565694bc3b427dccf34",
+		"l1.rollup.sequencer-inbox":          "0x36ae55645214389b2c87e68dbd251f24deaea78f",
+		"l1.rollup.rollup":                   "0x24748401c322b94173eaede6fa7c0f05d8630930",
+		"l1.rollup.validator-utils":          "0x9715ac95657ec545b88ceb91c3904538382adc6c",
+		"l1.rollup.validator-wallet-creator": "0x55c95e9a3b9a45f1d278ce398755d333c353e924",
+		"l1.rollup.deployed-at":              3441387,
 		"l2.chain-id":                        621,
 		"init.empty":                         true,
 	}, "."), nil)
