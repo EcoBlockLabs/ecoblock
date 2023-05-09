@@ -849,8 +849,8 @@ func applyEcoBlockMainnetParameters(k *koanf.Koanf) error {
 	// TODO update EcoBlock mainnet config
 	return k.Load(confmap.Provider(map[string]interface{}{
 		"persistent.chain":                   "arb1",
-		"node.forwarding-target":             "https://rpc1.ecoblock.tech",
-		"node.feed.input.url":                "wss://feed.ecoblock.tech",
+		"node.forwarding-target":             "https://rpc.ecoblock.tech",
+		"node.feed.input.url":                "wss://rpc.ecoblock.tech/feed",
 		"l1.rollup.bridge":                   "",
 		"l1.rollup.inbox":                    "",
 		"l1.rollup.rollup":                   "",
@@ -865,17 +865,16 @@ func applyEcoBlockMainnetParameters(k *koanf.Koanf) error {
 func applyEcoBlockSepoliaTestnetParameters(k *koanf.Koanf) error {
 	return k.Load(confmap.Provider(map[string]interface{}{
 		"persistent.chain":                   "sepolia-rollup",
-		"node.forwarding-target":             "https://rpc1-testnet.ecoblock.tech",
-		"node.feed.input.url":                "wss://feed-testnet.ecoblock.tech",
-		"l1.rollup.bridge":                   "0x01af98e5962082813332ecce5b2df0c050d26416",
-		"l1.rollup.inbox":                    "0xa873a0c74573889e261fd565694bc3b427dccf34",
-		"l1.rollup.sequencer-inbox":          "0x36ae55645214389b2c87e68dbd251f24deaea78f",
-		"l1.rollup.rollup":                   "0x24748401c322b94173eaede6fa7c0f05d8630930",
-		"l1.rollup.validator-utils":          "0x9715ac95657ec545b88ceb91c3904538382adc6c",
-		"l1.rollup.validator-wallet-creator": "0x55c95e9a3b9a45f1d278ce398755d333c353e924",
-		"l1.rollup.deployed-at":              3441387,
+		"node.forwarding-target":             "https://rpc-testnet.ecoblock.tech",
+		"node.feed.input.url":                "wss://rpc-testnet.ecoblock.tech/feed",
+		"l1.rollup.bridge":                   "0x043d53d7883f81c947963f11d25130b97061c22a",
+		"l1.rollup.inbox":                    "0xe44f80a5d59975e058b33cd62569b4ae2cbe30e1",
+		"l1.rollup.sequencer-inbox":          "0xc5eca22b8f79a11bde3f304021b7e6abbf60f851",
+		"l1.rollup.rollup":                   "0x8da4f0c8e6ffb168a6e9ae75af2866a9d24ae30c",
+		"l1.rollup.validator-utils":          "0xac6e4f62fbfd9d82f620804aa5021d65936c0b0a",
+		"l1.rollup.validator-wallet-creator": "0x4464def27c473d51a16bf2b155457b3f38e09bc5",
+		"l1.rollup.deployed-at":              3444248,
 		"l2.chain-id":                        621,
-		"init.empty":                         true,
 	}, "."), nil)
 }
 
