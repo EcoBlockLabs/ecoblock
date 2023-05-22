@@ -48,11 +48,9 @@ type L1PricingState struct {
 }
 
 var (
-	BatchPosterTableKey = []byte{0}
-	// TODO replace this address
-	BatchPosterAddress      = common.HexToAddress("0xA4B000000000000000000073657175656e636572")
-	BatchPosterPayToAddress = BatchPosterAddress
-	// TODO replace this address
+	BatchPosterTableKey      = []byte{0}
+	BatchPosterAddress       = common.HexToAddress("0xA4B000000000000000000073657175656e636572")
+	BatchPosterPayToAddress  = BatchPosterAddress
 	L1PricerFundsPoolAddress = common.HexToAddress("0xA4B00000000000000000000000000000000000f6")
 
 	ErrInvalidTime = errors.New("invalid timestamp")

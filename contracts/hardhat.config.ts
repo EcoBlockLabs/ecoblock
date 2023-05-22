@@ -89,6 +89,12 @@ module.exports = {
         ? [process.env['DEVNET_PRIVKEY']]
         : [],
     },
+    sepolia: {
+      url: 'https://rpc.sepolia.org',
+      accounts: process.env['DEVNET_PRIVKEY']
+        ? [process.env['DEVNET_PRIVKEY']]
+        : [],
+    },
     rinkeby: {
       url: 'https://rinkeby.infura.io/v3/' + process.env['INFURA_KEY'],
       accounts: process.env['DEVNET_PRIVKEY']
@@ -127,6 +133,7 @@ module.exports = {
     apiKey: {
       mainnet: process.env['ETHERSCAN_API_KEY'],
       goerli: process.env['ETHERSCAN_API_KEY'],
+      sepolia: process.env['ETHERSCAN_API_KEY'],
       rinkeby: process.env['ETHERSCAN_API_KEY'],
       arbitrumOne: process.env['ARBISCAN_API_KEY'],
       arbitrumTestnet: process.env['ARBISCAN_API_KEY'],
