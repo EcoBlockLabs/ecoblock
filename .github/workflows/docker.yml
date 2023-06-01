@@ -100,7 +100,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: wavm-machine-${{ steps.module-root.outputs.module-root }}
-          path: target/machines/latest/*
+          path: target/machines/${{ steps.module-root.outputs.module-root }}/*
           if-no-files-found: error
 
       - name: Move cache
