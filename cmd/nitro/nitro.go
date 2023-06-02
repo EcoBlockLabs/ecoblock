@@ -758,6 +758,36 @@ func ParseNode(ctx context.Context, args []string) (*NodeConfig, *genericconf.Wa
 			}
 			chainFound = true
 		}
+	} else if l1ChainId.Uint64() == 11155111 { // Sepolia testnet
+		switch l2ChainId {
+		case 0:
+			return nil, nil, nil, nil, nil, errors.New("must specify --l2.chain-id to choose rollup")
+		case 621:
+			if err := applyEcoBlockSepoliaTestnetParameters(k); err != nil {
+				return nil, nil, nil, nil, nil, err
+			}
+			chainFound = true
+		}
+	} else if l1ChainId.Uint64() == 56 { // bsc mainnet
+		switch l2ChainId {
+		case 0:
+			return nil, nil, nil, nil, nil, errors.New("must specify --l2.chain-id to choose rollup")
+		case 630:
+			if err := applyEcoBlockBscMainnetParameters(k); err != nil {
+				return nil, nil, nil, nil, nil, err
+			}
+			chainFound = true
+		}
+	} else if l1ChainId.Uint64() == 97 { // Bsc testnet
+		switch l2ChainId {
+		case 0:
+			return nil, nil, nil, nil, nil, errors.New("must specify --l2.chain-id to choose rollup")
+		case 631:
+			if err := applyEcoBlockBscTestnetParameters(k); err != nil {
+				return nil, nil, nil, nil, nil, err
+			}
+			chainFound = true
+		}
 	} else if l1ChainId.Uint64() == 4 {
 		switch l2ChainId {
 		case 0:
@@ -779,16 +809,6 @@ func ParseNode(ctx context.Context, args []string) (*NodeConfig, *genericconf.Wa
 			chainFound = true
 		case 421703:
 			if err := applyArbitrumAnytrustGoerliTestnetParameters(k); err != nil {
-				return nil, nil, nil, nil, nil, err
-			}
-			chainFound = true
-		}
-	} else if l1ChainId.Uint64() == 11155111 { // Sepolia testnet
-		switch l2ChainId {
-		case 0:
-			return nil, nil, nil, nil, nil, errors.New("must specify --l2.chain-id to choose rollup")
-		case 621:
-			if err := applyEcoBlockSepoliaTestnetParameters(k); err != nil {
 				return nil, nil, nil, nil, nil, err
 			}
 			chainFound = true
@@ -875,6 +895,39 @@ func applyEcoBlockSepoliaTestnetParameters(k *koanf.Koanf) error {
 		"l1.rollup.validator-wallet-creator": "0x4464def27c473d51a16bf2b155457b3f38e09bc5",
 		"l1.rollup.deployed-at":              3444248,
 		"l2.chain-id":                        621,
+	}, "."), nil)
+}
+
+func applyEcoBlockBscMainnetParameters(k *koanf.Koanf) error {
+	// TODO update EcoBlock mainnet config
+	return k.Load(confmap.Provider(map[string]interface{}{
+		"persistent.chain":                   "ecoblock",
+		"node.forwarding-target":             "https://rpc.ecoblock.tech",
+		"node.feed.input.url":                "wss://rpc.ecoblock.tech/feed",
+		"l1.rollup.bridge":                   "",
+		"l1.rollup.inbox":                    "",
+		"l1.rollup.rollup":                   "",
+		"l1.rollup.sequencer-inbox":          "",
+		"l1.rollup.validator-utils":          "",
+		"l1.rollup.validator-wallet-creator": "",
+		"l1.rollup.deployed-at":              15411056,
+		"l2.chain-id":                        630,
+	}, "."), nil)
+}
+
+func applyEcoBlockBscTestnetParameters(k *koanf.Koanf) error {
+	return k.Load(confmap.Provider(map[string]interface{}{
+		"persistent.chain":                   "ecoblock-rollup",
+		"node.forwarding-target":             "https://rpc-testnet.ecoblock.tech",
+		"node.feed.input.url":                "wss://rpc-testnet.ecoblock.tech/feed",
+		"l1.rollup.bridge":                   "0x043d53d7883f81c947963f11d25130b97061c22a",
+		"l1.rollup.inbox":                    "0xe44f80a5d59975e058b33cd62569b4ae2cbe30e1",
+		"l1.rollup.sequencer-inbox":          "0xc5eca22b8f79a11bde3f304021b7e6abbf60f851",
+		"l1.rollup.rollup":                   "0x8da4f0c8e6ffb168a6e9ae75af2866a9d24ae30c",
+		"l1.rollup.validator-utils":          "0xac6e4f62fbfd9d82f620804aa5021d65936c0b0a",
+		"l1.rollup.validator-wallet-creator": "0x4464def27c473d51a16bf2b155457b3f38e09bc5",
+		"l1.rollup.deployed-at":              3444248,
+		"l2.chain-id":                        631,
 	}, "."), nil)
 }
 
