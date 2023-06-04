@@ -329,7 +329,10 @@ func DeployOnL1(ctx context.Context, l1client arbutil.L1Interface, deployAuth *b
 		expectedRollupAddr,
 	)
 	if err != nil {
-		return nil, fmt.Errorf("error submitting create rollup tx: %w", err)
+		if tx != nil {
+			return nil, fmt.Errorf("error submitting create rollup tx [%s]: %w", tx.Hash(), err)
+		}
+		return nil, fmt.Errorf("error submitting create rollup tx [none]: %w", err)
 	}
 	receipt, err := l1Reader.WaitForTxApproval(ctx, tx)
 	if err != nil {
