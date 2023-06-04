@@ -289,7 +289,7 @@ func GenerateRollupConfig(prod bool, wasmModuleRoot common.Hash, rollupOwner com
 	return rollupgen.Config{
 		ConfirmPeriodBlocks:      confirmPeriod,
 		ExtraChallengeTimeBlocks: 200,
-		StakeToken:               common.Address{},
+		StakeToken:               common.HexToAddress("0x0000000000000000000000000000000000000000"),
 		BaseStake:                big.NewInt(params.Ether),
 		WasmModuleRoot:           wasmModuleRoot,
 		Owner:                    rollupOwner,
