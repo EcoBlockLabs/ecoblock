@@ -93,7 +93,7 @@ contract RollupCreator is Ownable {
                 new TransparentUpgradeableProxy(
                     address(challengeManagerTemplate),
                     address(frame.admin),
-                    "0x"
+                    ""
                 )
             )
         );
