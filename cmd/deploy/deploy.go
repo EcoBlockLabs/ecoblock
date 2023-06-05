@@ -44,6 +44,7 @@ func main() {
 	l1ChainIdUint := flag.Uint64("l1chainid", 1337, "L1 chain ID")
 	l2ChainIdUint := flag.Uint64("l2chainid", params.ArbitrumDevTestChainConfig().ChainID.Uint64(), "L2 chain ID")
 	authorizevalidators := flag.Uint64("authorizevalidators", 0, "Number of validators to preemptively authorize")
+	txGasPrice := flag.Int64("txgasprice", 10000000000, "Gas price in Gwei to submit transaction")
 	txTimeout := flag.Duration("txtimeout", 10*time.Minute, "Timeout when waiting for a transaction to be included in a block")
 	prod := flag.Bool("prod", false, "Whether to configure the rollup for production or testing")
 	flag.Parse()
@@ -112,6 +113,7 @@ func main() {
 	headerReaderConfig := headerreader.DefaultConfig
 	headerReaderConfig.TxTimeout = *txTimeout
 
+	l1TransactionOpts.GasPrice = big.NewInt(*txGasPrice)
 	deployPtr, err := arbnode.DeployOnL1(
 		ctx,
 		l1client,
