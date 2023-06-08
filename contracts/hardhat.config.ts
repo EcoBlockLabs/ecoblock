@@ -101,6 +101,18 @@ module.exports = {
         ? [process.env['DEVNET_PRIVKEY']]
         : [],
     },
+    bscMainnet: {
+      url: 'https://bsc-dataseed1.binance.org/',
+      accounts: process.env['MAINNET_PRIVKEY']
+        ? [process.env['MAINNET_PRIVKEY']]
+        : [],
+    },
+    bscTestnet: {
+      url: 'https://data-seed-prebsc-2-s1.binance.org:8545',
+      accounts: process.env['DEVNET_PRIVKEY']
+        ? [process.env['DEVNET_PRIVKEY']]
+        : [],
+    },
     arbRinkeby: {
       url: 'https://rinkeby.arbitrum.io/rpc',
       accounts: process.env['DEVNET_PRIVKEY']
@@ -135,6 +147,8 @@ module.exports = {
       goerli: process.env['ETHERSCAN_API_KEY'],
       sepolia: process.env['ETHERSCAN_API_KEY'],
       rinkeby: process.env['ETHERSCAN_API_KEY'],
+      bscMainnet: process.env['ETHERSCAN_API_KEY'],
+      bscTestnet: process.env['ETHERSCAN_API_KEY'],
       arbitrumOne: process.env['ARBISCAN_API_KEY'],
       arbitrumTestnet: process.env['ARBISCAN_API_KEY'],
       nova: process.env['NOVA_ARBISCAN_API_KEY'],
@@ -144,7 +158,7 @@ module.exports = {
     customChains: [
       {
         network: 'ecoblock',
-        chainId: 620,
+        chainId: 630,
         urls: {
           apiURL: 'https://ecoscan.io/api',
           browserURL: 'https://ecoscan.io/',
@@ -152,7 +166,7 @@ module.exports = {
       },
       {
         network: 'ecoblockTestnet',
-        chainId: 621,
+        chainId: 631,
         urls: {
           apiURL: 'https://testnet.ecoscan.io/api',
           browserURL: 'https://testnet.ecoscan.io/',

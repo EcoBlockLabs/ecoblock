@@ -364,7 +364,7 @@ contract Inbox is DelegateCallAware, PausableUpgradeable, IInbox {
         returns (uint256)
     {
         // Use current block basefee if baseFee parameter is 0
-        return (1400 + 6 * dataLength) * (baseFee == 0 ? block.basefee : baseFee);
+        return (1400 + 6 * dataLength) * (baseFee == 0 ? 10 : baseFee); // TODO replace by block.basefee
     }
 
     /// @inheritdoc IInbox
@@ -504,7 +504,7 @@ contract Inbox is DelegateCallAware, PausableUpgradeable, IInbox {
             revert GasLimitTooLarge();
         }
 
-        uint256 submissionFee = calculateRetryableSubmissionFee(data.length, block.basefee);
+        uint256 submissionFee = calculateRetryableSubmissionFee(data.length, 10); // TODO replace by block.basefee
         if (maxSubmissionCost < submissionFee)
             revert InsufficientSubmissionCost(submissionFee, maxSubmissionCost);
 
@@ -582,7 +582,7 @@ contract Inbox is DelegateCallAware, PausableUpgradeable, IInbox {
                 data
             );
 
-        uint256 submissionFee = calculateRetryableSubmissionFee(data.length, block.basefee);
+        uint256 submissionFee = calculateRetryableSubmissionFee(data.length, 10); // TODO replace by block.basefee
         if (maxSubmissionCost < submissionFee)
             revert InsufficientSubmissionCost(submissionFee, maxSubmissionCost);
 
