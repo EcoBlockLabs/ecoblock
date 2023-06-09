@@ -157,6 +157,14 @@ module.exports = {
     },
     customChains: [
       {
+        network: 'bscMainnet',
+        chainId: 56,
+        urls: {
+          apiURL: 'https://bscscan.com/api',
+          browserURL: 'https://bscscan.com/',
+        },
+      },
+      {
         network: 'ecoblock',
         chainId: 630,
         urls: {
