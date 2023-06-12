@@ -390,7 +390,7 @@ contract SequencerInbox is DelegateCallAware, GasRefundEnabled, ISequencerInbox 
                 batchPoster,
                 dataHash,
                 seqMessageIndex,
-                uint256(10) // TODO replace by block.basefee
+                uint256(0) // TODO replace by block.basefee
             );
             uint256 msgNum = bridge.submitBatchSpendingReport(
                 batchPoster,

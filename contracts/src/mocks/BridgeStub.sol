@@ -56,7 +56,7 @@ contract BridgeStub is IBridge {
                 sender,
                 block.number,
                 block.timestamp, // solhint-disable-line not-rely-on-time
-                10, // TODO replace by block.basefee
+                0, // TODO replace by block.basefee
                 messageDataHash
             );
     }

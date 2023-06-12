@@ -127,7 +127,7 @@ contract BridgeTester is Initializable, DelegateCallAware, IBridge {
                 sender,
                 uint64(block.number),
                 uint64(block.timestamp), // solhint-disable-line not-rely-on-time
-                10, // TODO replace by block.basefee
+                0, // TODO replace by block.basefee
                 messageDataHash
             );
     }
