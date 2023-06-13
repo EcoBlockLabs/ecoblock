@@ -204,7 +204,7 @@ func (p *DataPoster[Meta]) getFeeAndTipCaps(ctx context.Context, gasLimit uint64
 	if baseFee == nil {
 		baseFee = big.NewInt(0)
 	}
-	newFeeCap := new(big.Int).Mul(latestHeader.BaseFee, big.NewInt(2))
+	newFeeCap := new(big.Int).Mul(baseFee, big.NewInt(2))
 	newFeeCap = arbmath.BigMax(newFeeCap, arbmath.FloatToBig(config.MinFeeCapGwei*params.GWei))
 
 	newTipCap, err := p.client.SuggestGasTipCap(ctx)
