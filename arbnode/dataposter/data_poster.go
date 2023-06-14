@@ -284,6 +284,7 @@ func (p *DataPoster[Meta]) PostTransaction(ctx context.Context, dataCreatedAt ti
 		To:        &to,
 		Value:     new(big.Int),
 		Data:      calldata,
+		ChainID:   p.headerReader.ChainId(),
 	}
 	fullTx, err := p.auth.Signer(p.auth.From, types.NewTx(&inner))
 	if err != nil {

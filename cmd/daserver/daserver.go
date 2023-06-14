@@ -7,6 +7,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"math/big"
 	"net/http"
 	"os"
 	"os/signal"
@@ -175,7 +176,7 @@ func startup() error {
 		if err != nil {
 			return err
 		}
-		l1Reader = headerreader.New(l1Client, func() *headerreader.Config { return &headerreader.DefaultConfig }) // TODO: config
+		l1Reader = headerreader.New(l1Client, big.NewInt(serverConfig.DAConf.L1ChainId), func() *headerreader.Config { return &headerreader.DefaultConfig }) // TODO: config
 	}
 
 	var seqInboxAddress *common.Address

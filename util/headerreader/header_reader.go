@@ -23,8 +23,9 @@ import (
 
 type HeaderReader struct {
 	stopwaiter.StopWaiter
-	config ConfigFetcher
-	client arbutil.L1Interface
+	config  ConfigFetcher
+	client  arbutil.L1Interface
+	chainId *big.Int
 
 	chanMutex sync.RWMutex
 	// All fields below require the chanMutex
@@ -87,9 +88,10 @@ var TestConfig = Config{
 	UseFinalityData:  false,
 }
 
-func New(client arbutil.L1Interface, config ConfigFetcher) *HeaderReader {
+func New(client arbutil.L1Interface, chainId *big.Int, config ConfigFetcher) *HeaderReader {
 	return &HeaderReader{
 		client:            client,
+		chainId:           chainId,
 		config:            config,
 		outChannels:       make(map[chan<- *types.Header]struct{}),
 		outChannelsBehind: make(map[chan<- *types.Header]struct{}),
@@ -393,6 +395,10 @@ func (s *HeaderReader) LatestFinalizedBlockNr(ctx context.Context) (uint64, erro
 
 func (s *HeaderReader) Client() arbutil.L1Interface {
 	return s.client
+}
+
+func (s *HeaderReader) ChainId() *big.Int {
+	return s.chainId
 }
 
 func (s *HeaderReader) Start(ctxIn context.Context) {

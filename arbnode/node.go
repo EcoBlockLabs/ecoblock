@@ -304,8 +304,8 @@ func GenerateRollupConfig(prod bool, wasmModuleRoot common.Hash, rollupOwner com
 	}
 }
 
-func DeployOnL1(ctx context.Context, l1client arbutil.L1Interface, deployAuth *bind.TransactOpts, sequencer common.Address, authorizeValidators uint64, readerConfig headerreader.ConfigFetcher, config rollupgen.Config) (*RollupAddresses, error) {
-	l1Reader := headerreader.New(l1client, readerConfig)
+func DeployOnL1(ctx context.Context, l1client arbutil.L1Interface, l1ChainId *big.Int, deployAuth *bind.TransactOpts, sequencer common.Address, authorizeValidators uint64, readerConfig headerreader.ConfigFetcher, config rollupgen.Config) (*RollupAddresses, error) {
+	l1Reader := headerreader.New(l1client, l1ChainId, readerConfig)
 	l1Reader.Start(ctx)
 	defer l1Reader.StopAndWait()
 
@@ -640,6 +640,7 @@ func createNodeImpl(
 	configFetcher ConfigFetcher,
 	l2BlockChain *core.BlockChain,
 	l1client arbutil.L1Interface,
+	l1ChainId *big.Int,
 	deployInfo *RollupAddresses,
 	txOpts *bind.TransactOpts,
 	dataSigner signature.DataSignerFunc,
@@ -677,7 +678,7 @@ func createNodeImpl(
 
 	var l1Reader *headerreader.HeaderReader
 	if config.L1Reader.Enable {
-		l1Reader = headerreader.New(l1client, func() *headerreader.Config { return &configFetcher.Get().L1Reader })
+		l1Reader = headerreader.New(l1client, l1ChainId, func() *headerreader.Config { return &configFetcher.Get().L1Reader })
 	}
 
 	sequencerConfigFetcher := func() *execution.SequencerConfig { return &configFetcher.Get().Sequencer }
@@ -973,12 +974,13 @@ func CreateNode(
 	configFetcher ConfigFetcher,
 	l2BlockChain *core.BlockChain,
 	l1client arbutil.L1Interface,
+	l1ChainId *big.Int,
 	deployInfo *RollupAddresses,
 	txOpts *bind.TransactOpts,
 	dataSigner signature.DataSignerFunc,
 	fatalErrChan chan error,
 ) (*Node, error) {
-	currentNode, err := createNodeImpl(ctx, stack, chainDb, arbDb, configFetcher, l2BlockChain, l1client, deployInfo, txOpts, dataSigner, fatalErrChan)
+	currentNode, err := createNodeImpl(ctx, stack, chainDb, arbDb, configFetcher, l2BlockChain, l1client, l1ChainId, deployInfo, txOpts, dataSigner, fatalErrChan)
 	if err != nil {
 		return nil, err
 	}

@@ -55,6 +55,7 @@ type DataAvailabilityConfig struct {
 	RestfulClientAggregatorConfig RestfulClientAggregatorConfig `koanf:"rest-aggregator"`
 
 	L1NodeURL                       string `koanf:"l1-node-url"`
+	L1ChainId                       int64  `koanf:"l1-chain-id"`
 	L1ConnectionAttempts            int    `koanf:"l1-connection-attempts"`
 	SequencerInboxAddress           string `koanf:"sequencer-inbox-address"`
 	ExtraSignatureCheckingPublicKey string `koanf:"extra-signature-checking-public-key"`

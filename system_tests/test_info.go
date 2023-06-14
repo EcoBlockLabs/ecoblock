@@ -34,6 +34,7 @@ type AccountInfo struct {
 
 type BlockchainTestInfo struct {
 	T           *testing.T
+	ChainId     *big.Int
 	Signer      types.Signer
 	Accounts    map[string]*AccountInfo
 	ArbInitData statetransfer.ArbosInitializationInfo
@@ -42,9 +43,10 @@ type BlockchainTestInfo struct {
 	TransferGas uint64
 }
 
-func NewBlockChainTestInfo(t *testing.T, signer types.Signer, gasPrice *big.Int, transferGas uint64) *BlockchainTestInfo {
+func NewBlockChainTestInfo(t *testing.T, chainId *big.Int, signer types.Signer, gasPrice *big.Int, transferGas uint64) *BlockchainTestInfo {
 	return &BlockchainTestInfo{
 		T:           t,
+		ChainId:     chainId,
 		Signer:      signer,
 		Accounts:    make(map[string]*AccountInfo),
 		GasPrice:    new(big.Int).Set(gasPrice),
@@ -56,6 +58,7 @@ func NewArbTestInfo(t *testing.T, chainId *big.Int) *BlockchainTestInfo {
 	var transferGas = util.NormalizeL2GasForL1GasInitial(800_000, params.GWei) // include room for aggregator L1 costs
 	arbinfo := NewBlockChainTestInfo(
 		t,
+		simulatedChainID,
 		types.NewArbitrumSigner(types.NewLondonSigner(chainId)), big.NewInt(l2pricing.InitialBaseFeeWei*2),
 		transferGas,
 	)
@@ -65,7 +68,7 @@ func NewArbTestInfo(t *testing.T, chainId *big.Int) *BlockchainTestInfo {
 }
 
 func NewL1TestInfo(t *testing.T) *BlockchainTestInfo {
-	return NewBlockChainTestInfo(t, types.NewLondonSigner(simulatedChainID), big.NewInt(params.GWei*100), params.TxGas)
+	return NewBlockChainTestInfo(t, simulatedChainID, types.NewLondonSigner(simulatedChainID), big.NewInt(params.GWei*100), params.TxGas)
 }
 
 func GetTestKeyForAccountName(t *testing.T, name string) *ecdsa.PrivateKey {

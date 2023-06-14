@@ -117,6 +117,7 @@ func main() {
 	deployPtr, err := arbnode.DeployOnL1(
 		ctx,
 		l1client,
+		l1ChainId,
 		l1TransactionOpts,
 		sequencerAddress,
 		*authorizevalidators,
