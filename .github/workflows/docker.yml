@@ -98,6 +98,7 @@ jobs:
 
       - name: Upload WAVM machine as artifact
         uses: actions/upload-artifact@v3
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         with:
           name: wavm-machine-${{ steps.module-root.outputs.module-root }}
           path: target/machines/${{ steps.module-root.outputs.module-root }}/*
