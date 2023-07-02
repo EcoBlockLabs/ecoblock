@@ -46,6 +46,7 @@ type InitConfig struct {
 	DownloadPoll    time.Duration `koanf:"download-poll"`
 	DevInit         bool          `koanf:"dev-init"`
 	DevInitAddr     string        `koanf:"dev-init-address"`
+	DevInitBalance  uint          `koanf:"dev-init-balance"`
 	DevInitBlockNum uint64        `koanf:"dev-init-blocknum"`
 	Empty           bool          `koanf:"empty"`
 	AccountsPerSync uint          `koanf:"accounts-per-sync"`
@@ -484,7 +485,7 @@ func openInitializeChainDb(ctx context.Context, stack *node.Node, config *NodeCo
 			Accounts: []statetransfer.AccountInitializationInfo{
 				{
 					Addr:       common.HexToAddress(config.Init.DevInitAddr),
-					EthBalance: new(big.Int).Mul(big.NewInt(params.Ether), big.NewInt(1000)),
+					EthBalance: new(big.Int).Mul(big.NewInt(params.Ether), big.NewInt(int64(config.Init.DevInitBalance))),
 					Nonce:      0,
 				},
 			},
