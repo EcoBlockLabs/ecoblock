@@ -846,18 +846,17 @@ func ParseNode(ctx context.Context, args []string) (*NodeConfig, *genericconf.Wa
 }
 
 func applyEcoBlockMainnetParameters(k *koanf.Koanf) error {
-	// TODO update EcoBlock mainnet config
 	return k.Load(confmap.Provider(map[string]interface{}{
 		"persistent.chain":                   "arb1",
 		"node.forwarding-target":             "https://rpc.ecoblock.tech",
 		"node.feed.input.url":                "wss://rpc.ecoblock.tech/feed",
-		"l1.rollup.bridge":                   "",
-		"l1.rollup.inbox":                    "",
-		"l1.rollup.rollup":                   "",
-		"l1.rollup.sequencer-inbox":          "",
-		"l1.rollup.validator-utils":          "",
-		"l1.rollup.validator-wallet-creator": "",
-		"l1.rollup.deployed-at":              15411056,
+		"l1.rollup.bridge":                   "0xb9a75d7a4eb3e1de05d49dcd3c08fe133b133639",
+		"l1.rollup.inbox":                    "0xd0ccd2309a79f4dc4178278bc86c2a51832b916f",
+		"l1.rollup.rollup":                   "0x4698b00891820c79875bb2a8b8d4958d4b56a411",
+		"l1.rollup.sequencer-inbox":          "0x016aa34b40f06c88b9add1d4dba7754d0b9a17ea",
+		"l1.rollup.validator-utils":          "0xd6a84028953544c1a68700ee596c66959fb10b8e",
+		"l1.rollup.validator-wallet-creator": "0x4feb1418211edfad0b4018d35340a52f05a7623b",
+		"l1.rollup.deployed-at":              17517316,
 		"l2.chain-id":                        620,
 	}, "."), nil)
 }
