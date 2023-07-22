@@ -261,4 +261,26 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 USER user
 
 FROM nitro-node as nitro-node-default
+USER root
+# Copy in latest WASM module root
+RUN rm -f /home/user/target/machines/latest
+COPY --from=prover-export /bin/jit                                         /usr/local/bin/
+COPY --from=node-builder  /workspace/target/bin/deploy                     /usr/local/bin/
+COPY --from=node-builder  /workspace/target/bin/seq-coordinator-invalidate /usr/local/bin/
+COPY --from=module-root-calc /workspace/target/machines/latest/machine.wavm.br /home/user/target/machines/latest/
+COPY --from=module-root-calc /workspace/target/machines/latest/until-host-io-state.bin /home/user/target/machines/latest/
+COPY --from=module-root-calc /workspace/target/machines/latest/module-root.txt /home/user/target/machines/latest/
+COPY --from=module-root-calc /workspace/target/machines/latest/replay.wasm /home/user/target/machines/latest/
+RUN export DEBIAN_FRONTEND=noninteractive && \
+    apt-get update && \
+    apt-get install -y \
+    sudo && \
+    chmod -R 555 /home/user/target/machines && \
+    adduser user sudo && \
+    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /usr/share/doc/* && \
+    nitro --version
+
+USER user
 # Just to ensure nitro-node-dist is default
