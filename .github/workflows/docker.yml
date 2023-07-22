@@ -101,7 +101,7 @@ jobs:
         if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         with:
           name: wavm-machine-${{ steps.module-root.outputs.module-root }}
-          path: target/machines/${{ steps.module-root.outputs.module-root }}/*
+          path: target/machines/latest/*
           if-no-files-found: error
 
       - name: Move cache
